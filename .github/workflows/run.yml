@@ -1,4 +1,4 @@
-name: wangzi.uk网站签到
+name: 基建通刷邀请
 
 on:
   schedule:
@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - name: 签到
+      - name: 刷邀请
         run: |
           pip install -r requirements.txt
 
