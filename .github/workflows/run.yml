@@ -29,9 +29,7 @@ jobs:
           code_list[${#code_list[*]}]=${q}
           done
           code_num=${#code_list[*]}
-          else
           echo "共有 $code_num个邀请码，即将开始刷邀请！"
-          fi
           for ((i=0;i<$code_num;i++))
           do
           python3 invite_user.py <<EOF
