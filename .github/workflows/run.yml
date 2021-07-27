@@ -1,0 +1,60 @@
+name: wangzi.uk网站签到
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  watch:
+    types: started
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: 初始化Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: 签到
+        run: |
+          pip install -r requirements.txt
+
+
+          wx_key='${{ secrets.WX_KEY}}'
+          qq_key='${{ secrets.QQ_KEY}}'
+          code='${{ secrets.CODE}}'
+
+          wx_kye_list=()
+          qq_key__list=()
+          code_list=()
+          for u in ${wx_key[*]}
+          do
+          wx_key_list[${#wx_key_list[*]}]=${u}
+          done
+          for p in ${qq_key[*]}
+          do
+          qq_key_list[${#qq_key_list[*]}]=${p}
+          done
+          for q in ${code[*]}
+          do
+          code_list[${#code_list[*]}]=${q}
+          done
+          wx_key_num=${#wx_key_list[*]}
+          qq_key_num=${#qq_key_list[*]}
+          code_num=${#code_list[*]}
+          if [[ $wx_key_num != $qq_key_num || $wx_key_num != $code_num ]];then
+          echo "微信key和qq key、邀请码个数不对应！"
+          exit 1
+          else
+          echo "共有 $code_num个邀请码，即将开始刷邀请！"
+          fi
+          for ((i=0;i<$code_num;i++))
+          do
+          python3 invite_user.py <<EOF
+          ${code_list[$i]}
+          ${wx_key_list[$i]}
+          ${qq_key_list[$i]}
+          EOF
+          done
