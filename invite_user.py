@@ -5,6 +5,7 @@ from Crypto.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
 from Crypto.PublicKey import RSA
 import base64
 import random
+import string
 
 
 # 把原账号绑定微信 以防丢失
@@ -17,6 +18,16 @@ import random
 def rand_name():
     name = '通友{}'
     return name.format(random.randint(122268, 180000))
+
+
+# 随机28位微信字符key
+def rand_wx_key():
+    return ''.join(random.sample(string.ascii_letters + string.digits, 28))
+
+
+# 随机32位qq字符key
+def rand_qq_key():
+    return ''.join(random.sample(string.ascii_letters + string.digits, 32))
 
 
 def ras_encrypt(plain, public_key):
@@ -144,8 +155,10 @@ def permanent_logOff(account_id, token):
 
 if __name__ == '__main__':
     code = input('请输入邀请码：')
-    wx_login_key = input('请输入微信key：')  # 任意28位即可
-    qq_login_key = input('请输入qq key：')  # 任意32位即可
+    # wx_login_key = input('请输入微信key：')  # 任意28位即可
+    # qq_login_key = input('请输入qq key：')  # 任意32位即可
+    wx_login_key = rand_wx_key()  # 任意28位即可
+    qq_login_key = rand_qq_key()  # 任意32位即可
     token, account_id = qq_login(qq_login_key)
     # 绑定微信
     bind_wx(token, wx_login_key)
