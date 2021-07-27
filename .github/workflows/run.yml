@@ -2,7 +2,7 @@ name: 基建通刷邀请
 
 on:
   schedule:
-    - cron: '0 9 * * *'
+    - cron: '0 1,10 * * *'
   watch:
     types: started
 
