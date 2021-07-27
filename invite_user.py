@@ -64,20 +64,6 @@ def get_sms_code():
     print("验证码获取状态：" + res.text)
 
 
-# 绑定手机
-def binding_Phone(token):
-    headers = {
-        'Host': 'news.cninct.com',
-        'Content-Type': 'application/json',
-        'User-Agent': 'Build/5.5.3 (com.suitang.jjt; build:2; iOS 14.2.0) Alamofire/5.0.2',
-        'Token-Cninct': f'{token}',
-    }
-    sms_code = input("请输入绑定验证码：")
-    data = {"login_key": "18483618398", "sms_code": f"{sms_code}", "self_login_type": 1}
-    res = requests.post(url=' https://news.cninct.com/JiJianTong?op=BindAccountLoginKey', headers=headers, json=data)
-    print("绑定状态：" + res.text)
-
-
 # 解绑qq
 def unbind_qq(token):
     headers = {
@@ -130,38 +116,9 @@ def bind_wx(token, login_key):
     print("微信绑定状态：" + res.text)
 
 
-# 用手机号登录
-def login_phone():
-    PUBLIC_KEY_TOKEN = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCNkKNoYNo3WC6wEvZIXoW00GRuYiI9o6osjtXd79VnKuPnbcTfSQi+Gg2dSYWpkNqs90c3+tQ6yyM/U0HkWo1B5eTVeJw18tcygRryOgrsqLnaTOGsLAgJ2rV8mhRfpRNtVR+b18GrddSPmVXOYPMpXXGP0Cz5GhZBu6nQ+eB7ZwIDAQAB";
-    pub_key = f'-----BEGIN PUBLIC KEY-----\n{PUBLIC_KEY_TOKEN}\n-----END PUBLIC KEY-----'
-    text = "userid={}&platform=4&dev=iphone"
-    ciphertext = ras_encrypt(text, pub_key)
-    headers = {
-        'Host': 'news.cninct.com',
-        'Content-Type': 'application/json',
-        'User-Agent': 'Build/5.5.3 (com.suitang.jjt; build:2; iOS 14.2.0) Alamofire/5.0.2',
-        'Token-Cninct': f'{ciphertext}',
-    }
-    sms_code = input("请输入登陆验证码：")
-    data = {"self_login_nick_name": "",
-            "self_login_pwd": f"{sms_code}",
-            "device_token": "de3ba5f58db223dd02b590337721f142dbe3ada7d5f2016186afbf699fd4bdbe",
-            "login_key": "18483618398",
-            "self_login_type": 1}
-    res = requests.post(url='https://news.cninct.com/JiJianTong?op=SelfLogin', headers=headers, json=data)
-    print("手机登录状态：" + res.text)
-    result = res.json().get('ext').get('result')[0]
-    userid = result.get('userid')
-    account_id = result.get('account_id')
-    # print(userid)
-    # print(res.text)
-    token = ras_encrypt(text.format(userid), pub_key)
-    return token, account_id
-
-
 # 填写邀请码
 def write_code(token, code):
-    data = {"friend_account_id_un": code}
+    data = {"friend_account_id_un": int(code)}
     headers = {
         'Host': 'news.cninct.com',
         'Content-Type': 'application/json',
@@ -186,32 +143,14 @@ def permanent_logOff(account_id, token):
 
 
 if __name__ == '__main__':
-    # code = 109052
-    # wx_login_key = "obFojuMIsnLnauD_3vaRfeme-YSI" #任意28位即可
-    # qq_login_key = "967A3D6976F658DA331B8E708F3B06E3" # 任意32位即可
     code = input('请输入邀请码：')
     wx_login_key = input('请输入微信key：')  # 任意28位即可
     qq_login_key = input('请输入qq key：')  # 任意32位即可
-    # print(rand_name())
-    # token = 'TYLmGFj8oJvuxLYTDcJZ5IyYwmXR3LpofuhYwbP7Qr8ynU2BWlVUz3PXZt4SoBjqFbFZIK7Vd2vG5X5UDQ67GE+ZZK+Ex6U8BMlOpXJ5b+R0/5gMNseRZ9rU47GxOwEn12wrX59NrkFyoaGpJAL9ZseKd5vnGMrBruipr2QzPVQ='
-    # userid = 111
-    # qq登录
     token, account_id = qq_login(qq_login_key)
-    # 获取验证码
-    # get_sms_code()
-    # # 绑定手机
-    # binding_Phone(token)
     # 绑定微信
     bind_wx(token, wx_login_key)
     # 解绑qq
     unbind_qq(token)
-    # 等待一分钟
-    # print("请等待一分钟后获取登陆验证码")
-    # time.sleep(60)
-    # # 获取验证码
-    # get_sms_code()
-    # # 重新用手机号验证码登录
-    # token, account_id = login_phone()
     # 微信重新登录
     token, account_id = login_wx(wx_login_key)
     write_code(token, code)
