@@ -19,7 +19,7 @@ jobs:
           chmod +x ./serverless/deploy.sh
           bash ./serverless/deploy.sh
 
-      - name: Delete Workflow Runs # 删除执行日志
+      - name: Delete Workflow Runs
           uses: Mattraks/delete-workflow-runs@main
           with:
             token: ${{ github.token }}
