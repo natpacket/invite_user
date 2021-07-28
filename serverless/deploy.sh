@@ -15,7 +15,7 @@ if [[ -z $TENCENT_SECRET_ID || -z $TENCENT_SECRET_KEY ]]; then
   exit 1
 else
   echo "开始安装Serverless Framework..."
-  npm install -g serverless
+  sudo npm install -g serverless
   echo "开始部署..."
   sls deploy --debug
 fi
