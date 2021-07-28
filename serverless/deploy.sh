@@ -1,5 +1,6 @@
 # 将serverless服务需要的文件拷贝进serverless文件夹
 echo "开始复制文件..."
+cp code.json ./serverless
 cp invite_user.py ./serverless
 cp requirements.txt ./serverless
 cd ./serverless
