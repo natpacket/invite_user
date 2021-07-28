@@ -18,5 +18,6 @@ else
   echo "开始安装Serverless Framework..."
   npm install -g serverless
   echo "开始部署..."
+  sls login
   sls deploy --debug
 fi
