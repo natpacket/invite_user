@@ -3,7 +3,6 @@ echo "开始复制文件..."
 cp invite_user.py ./serverless
 cp requirements.txt ./serverless
 cd ./serverless
-ls -a
 
 # 开始安装依赖
 echo "开始安装python脚本依赖..."
@@ -18,5 +17,5 @@ else
   echo "开始安装Serverless Framework..."
   sudo npm install -g serverless
   echo "开始部署..."
-  sls deploy --debug
+  sudo sls deploy --debug
 fi
