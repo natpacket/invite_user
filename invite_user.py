@@ -6,6 +6,7 @@ from Crypto.PublicKey import RSA
 import base64
 import random
 import string
+import json
 
 
 # 把原账号绑定微信 以防丢失
@@ -152,7 +153,27 @@ def permanent_logOff(account_id, token):
     res = requests.post(url='https://news.cninct.com/JiJianTong?op=PermanentLogOff', json=data, headers=headers)
     print("注销状态：" + res.text)
 
+# 腾讯云函数使用
+def main(a, b):
+    # code = input('请输入邀请码：')
+    with open('./code.json', encoding='utf-8') as f:
+        data = json.loads(f.read())
+    code = data.get('code')
+    # wx_login_key = input('请输入微信key：')  # 任意28位即可
+    # qq_login_key = input('请输入qq key：')  # 任意32位即可
+    wx_login_key = rand_wx_key()  # 任意28位即可
+    qq_login_key = rand_qq_key()  # 任意32位即可
+    token, account_id = qq_login(qq_login_key)
+    # 绑定微信
+    bind_wx(token, wx_login_key)
+    # 解绑qq
+    unbind_qq(token)
+    # 微信重新登录
+    token, account_id = login_wx(wx_login_key)
+    write_code(token, code)
+    permanent_logOff(account_id, token)
 
+# github actiosn 使用
 if __name__ == '__main__':
     code = input('请输入邀请码：')
     # wx_login_key = input('请输入微信key：')  # 任意28位即可
