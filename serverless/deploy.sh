@@ -17,5 +17,5 @@ else
   echo "开始安装Serverless Framework..."
   sudo npm install -g serverless
   echo "开始部署..."
-  sls deploy --debug
+  sls deploy
 fi
