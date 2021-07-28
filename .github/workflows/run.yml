@@ -12,6 +12,7 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
+      - name: 拉取代码
       - uses: actions/checkout@v2
       - name: 初始化Python
         uses: actions/setup-python@v2
@@ -36,9 +37,9 @@ jobs:
           ${code_list[$i]}
           EOF
           done
-     - name: Delete workflow runs
-       uses: Mattraks/delete-workflow-runs@main
-       with:
-         token: ${{ secrets.AUTH_PAT }}
-         repository: ${{ github.repository }}
-         retain_days: ${{ github.event.inputs.days }
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@main
+        with:
+          token: ${{ secrets.AUTH_PAT }}
+          repository: ${{ github.repository }}
+          retain_days: ${{ github.event.inputs.days }
