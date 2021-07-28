@@ -12,7 +12,6 @@ jobs:
     if: github.event.repository.owner.id == github.event.sender.id
 
     steps:
-      - name: 拉取代码
       - uses: actions/checkout@v2
       - name: 初始化Python
         uses: actions/setup-python@v2
