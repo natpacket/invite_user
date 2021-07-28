@@ -1,9 +1,9 @@
 #应用组织信息（可选）
-app: checkin # 应用名称。留空则默认取当前组件的实例名称为app名称。
+app: invite_user# 应用名称。留空则默认取当前组件的实例名称为app名称。
 # stage: '' # 环境名称。默认值是 dev。建议使用 ${env.STAGE} 变量定义环境名称
 #组件信息
 component: scf # (必选) 组件名称，在该实例中为 scf
-name: checkin # (必选) 组件实例名称。
+name: invite_user # (必选) 组件实例名称。
 #组件参数配置，根据每个组件，实现具体的资源信息配置
 inputs:
   name: ${app} # 云函数名称，默认为 ${name}-${stage}-${app}
