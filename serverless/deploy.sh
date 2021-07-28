@@ -8,6 +8,7 @@ cd ./serverless
 echo "开始安装python脚本依赖..."
 pip install --upgrade setuptools >/dev/null
 pip install -r requirements.txt -t ./
+ls -a
 
 # 开始部署到腾讯云
 if [[ -z $TENCENT_SECRET_ID || -z $TENCENT_SECRET_KEY ]]; then
@@ -15,7 +16,7 @@ if [[ -z $TENCENT_SECRET_ID || -z $TENCENT_SECRET_KEY ]]; then
   exit 1
 else
   echo "开始安装Serverless Framework..."
-  sudo npm install -g serverless
+  npm install -g serverless
   echo "开始部署..."
-  sudo sls deploy --debug
+  sls deploy --debug
 fi
