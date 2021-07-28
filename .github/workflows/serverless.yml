@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/chekout@v2
+      - uses: actions/checkout@v2
       - name: 部署腾讯云函数
         env:
           CODE: ${{ secrets.CODE_JSON }}
