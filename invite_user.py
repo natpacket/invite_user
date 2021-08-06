@@ -173,7 +173,7 @@ def main(a, b):
     write_code(token, code)
     permanent_logOff(account_id, token)
 
-# github actiosn 使用
+# Github Actions 使用
 if __name__ == '__main__':
     code = input('请输入邀请码：')
     # wx_login_key = input('请输入微信key：')  # 任意28位即可
